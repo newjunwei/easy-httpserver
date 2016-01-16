@@ -1,6 +1,6 @@
 package org.eh.core.util;
 
-import org.eh.core.common.Constants;
+import org.eh.core.common.Config;
 import org.eh.core.common.ReturnType;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class PropertyUtilTest {
 
 	@Test
 	public void testResd() {
-		PropertyUtil.analysisProperties(Constants.CLASS_PATH
+		PropertyUtil.analysisProperties(Config.CLASS_PATH
 				+ "web.properties");
 	}
 

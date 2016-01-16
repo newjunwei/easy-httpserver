@@ -2,7 +2,7 @@ package org.eh.core.web.view;
 
 import java.io.IOException;
 
-import org.eh.core.common.Constants;
+import org.eh.core.common.Config;
 import org.eh.core.common.ReturnType;
 import org.eh.core.model.ResultInfo;
 import org.eh.core.util.IOUtil;
@@ -74,8 +74,8 @@ public class ViewHandler {
 	 */
 	@Deprecated
 	private String analysisViewPath(String viewPath) {
-		String path = Constants.CLASS_PATH
-				+ (Constants.VIEW_BASE_PATH == null ? "/" : Constants.VIEW_BASE_PATH)
+		String path = Config.CLASS_PATH
+				+ (Config.VIEW_BASE_PATH == null ? "/" : Config.VIEW_BASE_PATH)
 				+ viewPath + ".page";
 		return path;
 	}
@@ -84,7 +84,7 @@ public class ViewHandler {
 	 * 解析velocity路径（根据Controller返回ResultInfo的view）
 	 */
 	private String analysisVelocityViewPath(String viewPath) {
-		String path = Constants.VIEW_BASE_PATH + "/"
+		String path = Config.VIEW_BASE_PATH + "/"
 				+ viewPath.replace(ReturnType.velocity.name() + ":", "") + ".vm";
 		return path;
 	}

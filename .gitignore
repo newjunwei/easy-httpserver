@@ -4,4 +4,11 @@
 *.jar
 *.war
 *.ear
-/target
+
+_Store
+*.un~
+*.iml
+*/*.iml
+.idea/
+target/
+.DS_Store

@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eh.core.common.Constants;
+import org.eh.core.common.Config;
 import org.eh.core.http.ApplicationContext;
 import org.eh.core.http.HttpSession;
 
@@ -23,7 +23,7 @@ public class SessionCleanTask extends TimerTask {
 
 	@Override
 	public void run() {
-		log.info("清理session......");
+		log.info("clean session......");
 		ConcurrentMap<String, HttpSession> sessionMap = ApplicationContext.getApplicationContext()
 				.getAllSession();
 		
@@ -35,11 +35,11 @@ public class SessionCleanTask extends TimerTask {
 			Date nowDate = new Date();
 			int diff = (int) ((nowDate.getTime() - httpSession.getLastVisitTime().getTime())/1000/60);
 			
-			if (diff > Integer.parseInt(Constants.OTHER_CONFIG_INFO.get(Constants.SESSION_TIMEOUT))) {
+			if (diff > Integer.parseInt(Config.OTHER_CONFIG_INFO.get(Config.SESSION_TIMEOUT))) {
 				it.remove();
 			}
 		}
 
-		log.info("清理session结束");
+		log.info("clean session over");
 	}
 }

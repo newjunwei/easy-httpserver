@@ -13,7 +13,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eh.core.annotation.AnnocationHandler;
-import org.eh.core.common.Constants;
+import org.eh.core.common.Config;
 import org.eh.core.common.ReturnType;
 import org.eh.core.model.ResultInfo;
 import org.eh.core.util.FileUploadContentAnalysis;
@@ -51,20 +51,23 @@ public class EHHttpHandler implements HttpHandler {
 					"EH_SESSION=" + sessionId + "; path=/");
 
 			// 根据后缀判断是否是静态资源
-			String suffix = path.substring(path.lastIndexOf("."), path.length());
-			if (Constants.STATIC_SUFFIXS.contains(suffix)) {
-				byte[] bytes = IOUtil.readFileByBytes(Constants.CLASS_PATH
-						+ "static" + path);
-				responseStaticToClient(httpExchange, 200, bytes);
-				return;
-			}
+            int dotIndex = path.lastIndexOf(".");
+            if (dotIndex != -1) {
+                String suffix = path.substring(path.lastIndexOf("."), path.length());
+                if (Config.STATIC_SUFFIXS.contains(suffix)) {
+                    byte[] bytes = IOUtil.readFileByBytes(Config.CLASS_PATH
+                            + "static" + path);
+                    responseStaticToClient(httpExchange, 200, bytes);
+                    return;
+                }
+            }
 
 			// 调用对应处理程序controller
 			ResultInfo resultInfo = invokController(httpExchange);
 
 			// 返回404
 			if (resultInfo == null || StringUtil.isEmpty(resultInfo.getView())) {
-				responseToClient(httpExchange, 200, "<h1>页面不存在<h1>");
+				responseToClient(httpExchange, 404, "<h1>page not found页<h1>");
 				return;
 			}
 
@@ -91,7 +94,7 @@ public class EHHttpHandler implements HttpHandler {
 
 		} catch (Exception e) {
 			httpExchange.close();
-			log.error("响应请求失败：", e);
+			log.error("response error：", e);
 		}
 	}
 
@@ -160,8 +163,7 @@ public class EHHttpHandler implements HttpHandler {
 			InstantiationException, IllegalAccessException, IOException, NoSuchMethodException,
 			SecurityException, IllegalArgumentException, InvocationTargetException {
 		String path = httpExchange.getRequestURI().getPath();
-		
-		String classPath = Constants.UrlClassMap.get(path.substring(0, path.lastIndexOf("/") + 1));
+		String classPath = Config.UrlClassMap.get(path.substring(0, path.lastIndexOf("/") + 1));
 		if (classPath == null || classPath.length() == 0) {
 			return null;
 		}

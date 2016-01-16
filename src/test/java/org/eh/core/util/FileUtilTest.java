@@ -1,6 +1,6 @@
 package org.eh.core.util;
 
-import org.eh.core.common.Constants;
+import org.eh.core.common.Config;
 import org.junit.Test;
 
 /**
@@ -12,7 +12,7 @@ public class FileUtilTest {
 
 	@Test
 	public void TestRead() {
-		String path = Constants.CLASS_PATH
+		String path = Config.CLASS_PATH
 				+ "org/eh/web/view/test/myinfo.page";
 		String content = IOUtil.readFile(path);
 		System.out.println(content);

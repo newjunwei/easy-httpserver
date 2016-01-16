@@ -15,11 +15,11 @@ import org.eh.core.util.PropertyUtil;
  * @author guojing
  * @date 2014-3-3
  */
-public class Constants {
-	private static final Log log = LogFactory.getLog(Constants.class);
+public class Config {
+	private static final Log log = LogFactory.getLog(Config.class);
 
-	/* 配置信息 */
-	public static String PACKAGE_PREFIX = "org.eh.web."; // 包前缀
+    /* 配置信息 */
+    public static String PACKAGE_PREFIX = "org.eh.web."; // 包前缀
 	public static String VIEW_BASE_PATH = ""; // 路径
 	public static String STATIC_RESOURCE_PATH = ""; // 静态文件路径
 	public static String CLASS_PATH = "";//classes文件夹路径
@@ -41,7 +41,7 @@ public class Constants {
 		try {
 			map = PropertyUtil.analysisProperties(path);
 		} catch (Exception e) {
-			log.error("配置文件不存在！", e);
+			log.error("config file not found", e);
 		}
 
 		for (String key : map.keySet()) {
